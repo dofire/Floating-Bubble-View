@@ -39,11 +39,11 @@ public class MyServiceJava extends ExpandableBubbleService {
         });
         return new BubbleBuilder(this)
                 .bubbleView(imgView)
-                .bubbleStyle(R.style.default_bubble_style)
+                .bubbleStyle(com.torrydo.floatingbubbleview.R.style.default_bubble_style)
                 .bubbleDraggable(true)
                 .forceDragging(true)
-                .closeBubbleView(ViewHelper.fromDrawable(this, R.drawable.ic_close_bubble))
-                .closeBubbleStyle(R.style.default_close_bubble_style)
+                .closeBubbleView(ViewHelper.fromDrawable(this, com.torrydo.floatingbubbleview.R.drawable.ic_close_bubble))
+                .closeBubbleStyle(com.torrydo.floatingbubbleview.R.style.default_close_bubble_style)
                 .distanceToClose(100)
                 .closeBehavior(CloseBubbleBehavior.FIXED_CLOSE_BUBBLE)
                 .startLocation(100, 100)
@@ -76,7 +76,7 @@ public class MyServiceJava extends ExpandableBubbleService {
                 .expandedView(expandedView)
                 .startLocation(0, 0)
                 .draggable(true)
-                .style(R.style.default_bubble_style)
+                .style(com.torrydo.floatingbubbleview.R.style.default_bubble_style)
                 .fillMaxWidth(true)
                 .enableAnimateToEdge(true)
                 .dimAmount(0.5f);

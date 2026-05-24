@@ -1,51 +1,41 @@
-name: Publish to maven central
+name: Publish to Maven Central
 
 on:
   push:
-    branches: [ release/v* ]
+    branches: [ master ]
   workflow_dispatch:
 
-#env:
-#  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-#  KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-#  KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+permissions:
+  contents: read
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout github repo
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'adopt'
+          distribution: temurin
+          java-version: 21
           cache: gradle
 
-      - name: Change wrapper permissions
+      - name: Grant execute permission for Gradle
         run: chmod +x ./gradlew
 
-      # Decode the secring file
-      - name: Decode Secring File
-        id: decode_secring
-        uses: timheuer/base64-to-file@v1.2
-        with:
-          fileDir: './secrets'
-          fileName: 'secring.gpg'
-          encodedString: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
+      - name: Decode GPG signing key
+        run: |
+          echo "${{ secrets.SIGNING_IN_MEMORY_KEY_BASE64 }}" | base64 -d > signing-key.asc
 
-      # generate docs
-      - name: Generate docs
-        run: ./gradlew dokkaJavadoc
-
-      # Build bundle and publish to Maven Central
-      - name: Build & publish to Maven Central
-        run: ./gradlew publish --no-daemon --no-parallel
-          -PmavenCentralUsername=${{ secrets.MAVEN_CENTRAL_USERNAME }}
-          -PmavenCentralPassword=${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-          -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }}
-          -Psigning.password=${{ secrets.SIGNING_PASSWORD }}
-          -Psigning.secretKeyRingFile="../${{ steps.decode_secring.outputs.filePath }}"
+      - name: Publish to Maven Central
+        run: |
+          export ORG_GRADLE_PROJECT_signingInMemoryKey="$(cat signing-key.asc)"
+          ./gradlew :FloatingBubbleView:publishAndReleaseToMavenCentral --no-daemon --no-parallel
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}

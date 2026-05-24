@@ -14,7 +14,7 @@ An Android library that creates floating bubbles on top of the screen 🎨, supp
 
 [<img src="https://img.shields.io/badge/platform-Android-yellow.svg" valign="middle">](https://www.android.com)
 [<img src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat" valign="middle">](https://android-arsenal.com/api?level=21)
-[<img src="https://img.shields.io/maven-central/v/io.github.torrydo/floating-bubble-view" valign="middle">]()
+[<img src="https://img.shields.io/maven-central/v/com.kagehub/floating-bubble-view" valign="middle">]()
 [<img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" valign="middle">](https://www.apache.org/licenses/LICENSE-2.0)
 
 </div>
@@ -96,11 +96,11 @@ android {
 <br>
 
 
-Declare the dependencies in the module-level `build.gradle` file 🍀 <img src="https://img.shields.io/maven-central/v/io.github.torrydo/floating-bubble-view" valign="middle">
+Declare the dependencies in the module-level `build.gradle` file 🍀 <img src="https://img.shields.io/maven-central/v/com.kagehub/floating-bubble-view" valign="middle">
 
 ```gradle
 dependencies {
-    implementation("io.github.torrydo:floating-bubble-view:<LATEST_VERSION>")
+    implementation("com.kagehub:floating-bubble-view:<LATEST_VERSION>")
 }
 ```
 <br>

@@ -57,7 +57,14 @@ class MyServiceKt : ExpandableBubbleService() {
             .enableAnimateToEdge(true)
 
             // set close-bubble view
-            .closeBubbleView(ViewHelper.fromDrawable(this, R.drawable.ic_close_bubble, 60, 60))
+            .closeBubbleView(
+                ViewHelper.fromDrawable(
+                    this,
+                    com.torrydo.floatingbubbleview.R.drawable.ic_close_bubble,
+                    60,
+                    60
+                )
+            )
 
             // set style for close-bubble, null by default
             .closeBubbleStyle(null)
